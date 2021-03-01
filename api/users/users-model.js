@@ -10,7 +10,7 @@ function findBy(filter) {
 }
 
 function findById(id) {
-	return db('users').where('userid', id)
+	return db('users').where('userid', id).first()
 }
 
 function insert(user) {
@@ -29,6 +29,7 @@ function findMyPotlucks(userid) {
 	return db('attendees as a')
 		.join('potlucks as p', 'a.potluckid', 'p.potluckid')
 		.select(
+			'p.potluckid',
 			'p.potluckname',
 			'p.date',
 			'p.time',

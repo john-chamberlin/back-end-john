@@ -64,11 +64,26 @@ function remove(id) {
 	return db('potlucks').where('potluckid', id).del()
 }
 
+function findAttendees(id) {
+	return db('attendees as a')
+		.join('users as u', 'a.userid', 'u.userid')
+		.join('potlucks as p', 'a.potluckid', 'p.potluckid')
+		.select(
+			'a.attendeeid',
+			'p.potluckid',
+			'p.potluckname',
+			'u.userid',
+			'u.username'
+		)
+		.where('a.potluckid', id)
+}
+
 module.exports = {
 	find,
 	findBy,
 	findById,
 	insert,
 	update,
-	remove
+	remove,
+	findAttendees
 }

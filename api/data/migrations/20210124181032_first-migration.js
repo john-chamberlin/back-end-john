@@ -18,9 +18,10 @@ exports.up = async knex => {
 				.references('userid')
 				.inTable('users')
 				.onUpdate('CASCADE')
+				.onDelete('CASCADE')
 		})
 		.createTable('attendees', table => {
-			table.increments('atendeeid')
+			table.increments('attendeeid')
 			table
 				.integer('potluckid')
 				.unsigned()
@@ -28,6 +29,7 @@ exports.up = async knex => {
 				.references('potluckid')
 				.inTable('potlucks')
 				.onUpdate('CASCADE')
+				.onDelete('CASCADE')
 			table
 				.integer('userid')
 				.unsigned()
@@ -35,6 +37,7 @@ exports.up = async knex => {
 				.references('userid')
 				.inTable('users')
 				.onUpdate('CASCADE')
+				.onDelete('CASCADE')
 		})
 		.createTable('items', table => {
 			table.increments('itemid')
@@ -49,6 +52,7 @@ exports.up = async knex => {
 				.references('potluckid')
 				.inTable('potlucks')
 				.onUpdate('CASCADE')
+				.onDelete('CASCADE')
 			table
 				.integer('itemid')
 				.unsigned()
@@ -56,12 +60,14 @@ exports.up = async knex => {
 				.references('itemid')
 				.inTable('items')
 				.onUpdate('CASCADE')
+				.onDelete('CASCADE')
 			table
 				.integer('userid')
 				.unsigned()
 				.references('userid')
 				.inTable('users')
 				.onUpdate('CASCADE')
+				.onDelete('CASCADE')
 		})
 }
 
