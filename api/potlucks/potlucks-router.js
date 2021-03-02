@@ -4,7 +4,11 @@ const router = express.Router()
 const Potlucks = require('./potlucks-model')
 const Items = require('../items/items-model')
 
-const { checkPotluck } = require('./potlucks-middleware')
+const {
+	checkPotluck,
+	checkItemPayload,
+	checkItemExists
+} = require('./potlucks-middleware')
 const { restricted } = require('../auth/auth-middleware')
 
 router.get('/', (req, res) => {
@@ -61,14 +65,41 @@ router.get('/:potluckid/attendees', checkPotluck, (req, res) => {
 		})
 })
 
-router.post('/:potluckid/items', (req, res) => {
-	const potid = req.params.potluckid
-	Items.insert(potid, req.body)
-		.then(potluck => {
-			res.status(201).json(potluck)
+router.post(
+	'/:potluckid/items',
+	checkItemPayload,
+	checkItemExists,
+	restricted,
+	(req, res) => {
+		const potid = req.params.potluckid
+		Items.insert(potid, req.body)
+			.then(potluck => {
+				res.status(201).json(potluck)
+			})
+			.catch(err => {
+				res.status(500).json(err.message)
+			})
+	}
+)
+
+router.get('/:potluckid/items', (req, res) => {
+	Items.findBy({ potluckid: req.params.potluckid })
+		.then(items => {
+			res.status(200).json(items)
 		})
 		.catch(err => {
-			res.status(500).json(err.message)
+			res.status(500).json(err)
+		})
+})
+
+router.put('/:potluckid/items/:itemid', restricted, (req, res) => {
+	const itemid = req.params.itemid
+	Items.update(itemid, req.body)
+		.then(item => {
+			res.status(200).json(item)
+		})
+		.catch(err => {
+			res.status(500).json(err)
 		})
 })
 
