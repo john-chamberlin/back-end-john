@@ -28,6 +28,7 @@ router.post('/login', checkPayload, checkUserForLogin, (req, res) => {
 		const token = makeToken(req.userData)
 		res.status(200).json({
 			message: `Welcome back, ${req.userData.username}`,
+			user: req.userData,
 			token
 		})
 	} else {
