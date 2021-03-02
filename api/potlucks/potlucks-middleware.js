@@ -48,9 +48,24 @@ const checkItemExists = (req, res, next) => {
 		})
 }
 
+const checkItemId = (req, res, next) => {
+	Items.findById(req.params.itemid)
+		.then(item => {
+			if (item) {
+				next()
+			} else {
+				res.status(404).json(`No item found with ID ${req.params.itemid}`)
+			}
+		})
+		.catch(err => {
+			res.status(500).json(err)
+		})
+}
+
 module.exports = {
 	checkPotluck,
 	checkPotluckPayload,
 	checkItemPayload,
-	checkItemExists
+	checkItemExists,
+	checkItemId
 }

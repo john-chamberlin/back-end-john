@@ -7,7 +7,8 @@ const Items = require('../items/items-model')
 const {
 	checkPotluck,
 	checkItemPayload,
-	checkItemExists
+	checkItemExists,
+	checkItemId
 } = require('./potlucks-middleware')
 const { restricted } = require('../auth/auth-middleware')
 
@@ -92,11 +93,22 @@ router.get('/:potluckid/items', (req, res) => {
 		})
 })
 
-router.put('/:potluckid/items/:itemid', restricted, (req, res) => {
+router.put('/:potluckid/items/:itemid', restricted, checkItemId, (req, res) => {
 	const itemid = req.params.itemid
 	Items.update(itemid, req.body)
 		.then(item => {
 			res.status(200).json(item)
+		})
+		.catch(err => {
+			res.status(500).json(err)
+		})
+})
+
+router.delete('/:potluckid/items/:itemid', checkItemId, (req, res) => {
+	const itemid = req.params.itemid
+	Items.remove(itemid)
+		.then(() => {
+			res.status(200).json(`Item with ID ${itemid} successfully deleted`)
 		})
 		.catch(err => {
 			res.status(500).json(err)

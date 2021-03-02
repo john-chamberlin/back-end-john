@@ -8,6 +8,10 @@ function findBy(filter) {
 	return db('items').where(filter).orderBy('itemid')
 }
 
+function findById(id) {
+	return db('items').where('itemid', id).first()
+}
+
 function insert(potluckid, item) {
 	return db('items')
 		.insert({ potluckid, itemname: item.itemname })
@@ -25,9 +29,15 @@ function update(id, changes) {
 		})
 }
 
+function remove(id) {
+	return db('items').where('itemid', id).del()
+}
+
 module.exports = {
 	find,
 	findBy,
 	insert,
-	update
+	update,
+	remove,
+	findById
 }
