@@ -78,6 +78,14 @@ function findAttendees(id) {
 		.where('a.potluckid', id)
 }
 
+function addPotluckItems(potluckid, item) {
+	return db('potluckitems')
+		.insert({ potluckid })
+		.then(() => {
+			return db('potluckitems').where({ itemname: item.itemname })
+		})
+}
+
 module.exports = {
 	find,
 	findBy,

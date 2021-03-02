@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Potlucks = require('./potlucks-model')
+const Items = require('../items/items-model')
 
 const { checkPotluck } = require('./potlucks-middleware')
 const { restricted } = require('../auth/auth-middleware')
@@ -57,6 +58,17 @@ router.get('/:potluckid/attendees', checkPotluck, (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).json(`Server error: ${err}`)
+		})
+})
+
+router.post('/:potluckid/items', (req, res) => {
+	const potid = req.params.potluckid
+	Items.insert(potid, req.body)
+		.then(potluck => {
+			res.status(201).json(potluck)
+		})
+		.catch(err => {
+			res.status(500).json(err.message)
 		})
 })
 

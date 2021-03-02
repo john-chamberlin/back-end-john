@@ -41,24 +41,13 @@ exports.up = async knex => {
 		})
 		.createTable('items', table => {
 			table.increments('itemid')
-			table.string('itemname').notNullable().unique()
-		})
-		.createTable('potluckitems', table => {
-			table.increments('potluckitemid')
+			table.string('itemname').notNullable()
 			table
 				.integer('potluckid')
 				.unsigned()
 				.notNullable()
 				.references('potluckid')
 				.inTable('potlucks')
-				.onUpdate('CASCADE')
-				.onDelete('CASCADE')
-			table
-				.integer('itemid')
-				.unsigned()
-				.notNullable()
-				.references('itemid')
-				.inTable('items')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE')
 			table
