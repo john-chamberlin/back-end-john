@@ -17,13 +17,10 @@ const checkUser = (req, res, next) => {
 const checkRsvp = (req, res, next) => {
 	Users.findMyPotlucks(req.params.userid)
 		.then(potlucks => {
-			const potluckArr = potlucks.map(item => {
-				return item.potluckid
+			const potluckArr = potlucks.filter(item => {
+				return item.potluckid == req.params.potluckid
 			})
-			const isDuplicate = potluckArr.some((item, idx) => {
-				return potluckArr.indexOf(item) != idx
-			})
-			if (isDuplicate) {
+			if (potluckArr.length) {
 				res
 					.status(404)
 					.json(
