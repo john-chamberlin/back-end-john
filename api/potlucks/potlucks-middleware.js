@@ -7,17 +7,19 @@ const checkPotluck = (req, res, next) => {
 			if (potluck) {
 				next()
 			} else {
-				res.status(404).json(`No potluck found with ID ${req.params.potluckid}`)
+				res
+					.status(404)
+					.json({ message: `No potluck found with ID ${req.params.potluckid}` })
 			}
 		})
 		.catch(err => {
-			res.status(500).json(`Server error: ${err}`)
+			res.status(500).json({ message: `Server error: ${err}` })
 		})
 }
 
 const checkPotluckPayload = (req, res, next) => {
 	if (!req.body.potluckname) {
-		res.status(401).json(`Please include a name for the potluck`)
+		res.status(401).json({ message: `Please include a name for the potluck` })
 	} else {
 		next()
 	}
@@ -25,7 +27,7 @@ const checkPotluckPayload = (req, res, next) => {
 
 const checkItemPayload = (req, res, next) => {
 	if (!req.body.itemname) {
-		res.status(401).json(`Please include itemname for the item`)
+		res.status(401).json({ message: `Please include itemname for the item` })
 	} else {
 		next()
 	}
@@ -38,7 +40,9 @@ const checkItemExists = (req, res, next) => {
 				return item.itemname == req.body.itemname
 			})
 			if (itemArr.length) {
-				res.status(404).json(`This item is already registered to this potluck`)
+				res
+					.status(404)
+					.json({ message: `This item is already registered to this potluck` })
 			} else {
 				next()
 			}
@@ -54,7 +58,9 @@ const checkItemId = (req, res, next) => {
 			if (item) {
 				next()
 			} else {
-				res.status(404).json(`No item found with ID ${req.params.itemid}`)
+				res
+					.status(404)
+					.json({ message: `No item found with ID ${req.params.itemid}` })
 			}
 		})
 		.catch(err => {

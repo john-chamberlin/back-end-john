@@ -5,7 +5,11 @@ function find() {
 }
 
 function findBy(filter) {
-	return db('items').where(filter).orderBy('itemid')
+	return db('items as i ')
+		.join('users as u', 'i.userid', 'u.userid')
+		.select('i.itemid', 'i.itemname', 'i.potluckid', 'u.userid', 'u.username')
+		.where(filter)
+		.orderBy('itemid')
 }
 
 function findById(id) {

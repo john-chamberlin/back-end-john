@@ -18,7 +18,7 @@ router.post('/register', checkPayload, checkUserInDb, (req, res) => {
 			res.status(201).json(user)
 		})
 		.catch(err => {
-			res.status(500).json(`Server error: ${err}`)
+			res.status(500).json({ message: `Server error: ${err}` })
 		})
 })
 
@@ -32,7 +32,7 @@ router.post('/login', checkPayload, checkUserForLogin, (req, res) => {
 			token
 		})
 	} else {
-		res.status(401).json('Incorrect username or password')
+		res.status(401).json({ message: 'Incorrect username or password' })
 	}
 })
 

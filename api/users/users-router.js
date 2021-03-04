@@ -26,7 +26,7 @@ router.post(
 					)
 			})
 			.catch(err => {
-				res.status(500).json(`Server err: ${err}`)
+				res.status(500).json(err.message)
 			})
 	}
 )
@@ -43,7 +43,7 @@ router.post(
 				res.status(201).json(potluck)
 			})
 			.catch(err => {
-				res.status(500).json(err)
+				res.status(500).json(err.message)
 			})
 	}
 )
@@ -55,7 +55,7 @@ router.get('/:userid/created', checkUser, (req, res) => {
 			res.status(200).json(potlucks)
 		})
 		.catch(err => {
-			res.status(500).json(`Server error: ${err}`)
+			res.status(500).json(err.message)
 		})
 })
 
@@ -66,7 +66,7 @@ router.get('/:userid/potlucks', checkUser, (req, res) => {
 			res.status(200).json(potlucks)
 		})
 		.catch(err => {
-			res.status(500).json(`Server error: ${err}`)
+			res.status(500).json(err.message)
 		})
 })
 

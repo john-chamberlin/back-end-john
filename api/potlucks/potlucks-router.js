@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 			res.status(200).json(potlucks)
 		})
 		.catch(err => {
-			res.status(500).json(`Server error: ${err}`)
+			res.status(500).json(err.message)
 		})
 })
 
@@ -29,7 +29,7 @@ router.get('/:potluckid', checkPotluck, (req, res) => {
 			res.status(200).json(potluck)
 		})
 		.catch(err => {
-			res.status(500).json(`Server error: ${err}`)
+			res.status(500).json(err.message)
 		})
 })
 
@@ -40,7 +40,7 @@ router.put('/:potluckid', restricted, checkPotluck, (req, res) => {
 			res.status(200).json(potluck)
 		})
 		.catch(err => {
-			res.status(500).json(`Server error: ${err}`)
+			res.status(500).json(err.message)
 		})
 })
 
@@ -51,7 +51,7 @@ router.delete('/:potluckid', restricted, checkPotluck, (req, res) => {
 			res.status(200).json(`Potluck with id ${potluckid} removed succesfully`)
 		})
 		.catch(err => {
-			res.status(500).json(`Server error; ${err}`)
+			res.status(500).json(err.message)
 		})
 })
 
@@ -62,7 +62,7 @@ router.get('/:potluckid/attendees', checkPotluck, (req, res) => {
 			res.status(200).json(potlucks)
 		})
 		.catch(err => {
-			res.status(500).json(`Server error: ${err}`)
+			res.status(500).json(err.message)
 		})
 })
 
@@ -89,7 +89,7 @@ router.get('/:potluckid/items', (req, res) => {
 			res.status(200).json(items)
 		})
 		.catch(err => {
-			res.status(500).json(err)
+			res.status(500).json(err.message)
 		})
 })
 
@@ -100,7 +100,7 @@ router.put('/:potluckid/items/:itemid', restricted, checkItemId, (req, res) => {
 			res.status(200).json(item)
 		})
 		.catch(err => {
-			res.status(500).json(err)
+			res.status(500).json(err.message)
 		})
 })
 
@@ -111,7 +111,7 @@ router.delete('/:potluckid/items/:itemid', checkItemId, (req, res) => {
 			res.status(200).json(`Item with ID ${itemid} successfully deleted`)
 		})
 		.catch(err => {
-			res.status(500).json(err)
+			res.status(500).json(err.message)
 		})
 })
 
